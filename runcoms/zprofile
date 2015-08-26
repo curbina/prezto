@@ -41,11 +41,38 @@ typeset -gU cdpath fpath mailpath path
 #   $cdpath
 # )
 
-# Set the list of directories that Zsh searches for programs.
+infopath=(
+  /usr/local/share/info
+  /usr/share/info
+  $infopath
+)
+
+manpath=(
+  /usr/local/share/man
+  /usr/share/man
+  $manpath
+)
+
+for path_file in /etc/manpaths.d/*(.N); do
+  manpath+=($(<$path_file))
+done
+unset path_file
+
+## /usr/local/opt/coreutils/libexec/gnubin  < ---- handled in zpreztorc
 path=(
   /usr/local/{bin,sbin}
+  $HOME/miniconda/bin
+  $GOPATH/bin
+  $GOROOT/bin
+  /usr/{bin,sbin}
+  /{bin,sbin}
   $path
 )
+
+for path_file in /etc/paths.d/*(.N); do
+  path+=($(<$path_file))
+done
+unset path_file
 
 #
 # Less
@@ -70,5 +97,4 @@ if [[ ! -d "$TMPDIR" ]]; then
   export TMPDIR="/tmp/$LOGNAME"
   mkdir -p -m 700 "$TMPDIR"
 fi
-
 TMPPREFIX="${TMPDIR%/}/zsh"
