@@ -11,3 +11,34 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# Enable autojump -> z
+. `brew --prefix`/etc/profile.d/z.sh
+# I used to use autojump, so "j" is in muscle memory
+alias j=z
+
+# -------------------------------------------------------------------
+# display a neatly formatted path
+# -------------------------------------------------------------------
+path() {
+local blue="\033[1;34m"
+local green="\033[0;32m"
+local cyan="\033[0;36m"
+local purple="\033[0;35m"
+local brown="\033[0;33m"
+local reset_color="\033[0m"
+  echo $PATH | tr ":" "\n" | \
+    awk "{ sub(\"/usr\",   \"$green/usr$reset_color\"); \
+           sub(\"/bin\",   \"$blue/bin$reset_color\"); \
+           sub(\"/opt\",   \"$cyan/opt$reset_color\"); \
+           sub(\"/sbin\",  \"$purple/sbin$reset_color\"); \
+           sub(\"/local\", \"$brown/local$reset_color\"); \
+           print }"
+}
+
+# use .localrc for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
