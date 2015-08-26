@@ -9,3 +9,14 @@
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
+
+# ------------------------------------------------------------------------------
+# Exports
+# ------------------------------------------------------------------------------
+# Go
+export GOPATH=$HOME/dev/go
+export GOBIN=$GOPATH/bin
+export GOROOT=/usr/local/opt/go/libexec
+
+# Java
+export JAVA_HOME=$(/usr/libexec/java_home)cd ..
